@@ -110,7 +110,7 @@ class FallingBlock extends Entity{
 				$this->flagForDespawn();
 
 				$block = $this->level->getBlock($pos);
-				if($block->isTransparent() and !$block->canBeReplaced()){
+				if(($block->isTransparent() and !$block->canBeReplaced()) or $pos->distanceSquared($this->asVector3()->floor()) > 0.0001){ //distance check is for weird blocks like fences whose BBs extend outside their cell
 					//FIXME: anvils are supposed to destroy torches
 					$this->getLevel()->dropItem($this, ItemFactory::get($this->getBlock(), $this->getDamage()));
 				}else{
